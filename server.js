@@ -6,11 +6,12 @@
  *
  *  Name: Dominic Nunes Student ID: 016-183-121 Date: 2017-09-23
  *
- *  Online (Heroku) URL: http://web322-app.herokuapp.com/
+ *  Online (Heroku) URL: http://web322-app1.herokuapp.com/
  *********************************************************************************/
 
 
 const HTTP_PORT = process.env.PORT || 8080
+const data = require('./data-service.js')
 const express = require('express')
 const app = express()
 const path = require('path')
