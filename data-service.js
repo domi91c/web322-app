@@ -3,22 +3,22 @@ var fs = require('fs')
 var employees = []
 var departments = []
 
-module.exports.initialize = () =>
-    new Promise((resolve, reject) => {
-      try {
-        fs.readFile('./data/employees.json', (err, data) => {
-          if (err) throw err
-          employees = JSON.parse(data)
-        })
-        fs.readFile('./data/departments.json', (err, data) => {
-          if (err) throw err
-          departments = JSON.parse(data)
-        })
-      } catch (ex) {
-        reject('Initialization Failed')
-      }
+module.exports.initialize = () => new Promise((resolve, reject) => {
+  try {
+    fs.readFile('./data/employees.json', (err, data) => {
+      if (err) throw err
+      employees = JSON.parse(data)
       resolve('Working...')
     })
+    fs.readFile('./data/departments.json', (err, data) => {
+      if (err) throw err
+      departments = JSON.parse(data)
+      resolve('Working...')
+    })
+  } catch (err) {
+    reject('Initialization Failed')
+  }
+})
 
 module.exports.getAllEmployees = () => {
   var response = []
@@ -78,15 +78,16 @@ module.exports.getEmployeesByManager = manager => {
   })
 }
 
-module.exports.getEmployeeByNum = num =>
-    new Promise((resolve, reject) => {
-      for (let i = 0; i < employees.length; i++) {
-        if (employees[i].employeeNum === num) {
-          resolve(employees[i])
-        }
+module.exports.getEmployeeByNum = num => {
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < employees.length; i++) {
+      if (employees[i].employeeNum == num) {
+        resolve(employees[i])
       }
-      reject('no results returned')
-    })
+    }
+    reject('no employees found')
+  })
+}
 
 module.exports.getManagers = () => {
   var response = []

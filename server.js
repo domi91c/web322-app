@@ -10,9 +10,11 @@
  *********************************************************************************/
 
 let express = require('express')
-let app = express()
 let path = require('path')
+let app = express()
 let data_service = require('./data-service.js')
+const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 const HTTP_PORT = process.env.PORT || 8080
 
 function onHttpStart() {
@@ -30,13 +32,30 @@ function onHttpStart() {
 
 // load assets directory
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 
+app.engine('.hbs', exphbs({
+  extname: '.hbs',
+  defaultLayout: 'layout',
+  helpers: {
+    equal: function(lvalue, rvalue, options) {
+      if (arguments.length < 3) thrownew
+      Error('Handlebars Helper equal needs 2 parameters')
+      if (lvalue != rvalue) {
+        return options.inverse(this)
+      } else {return options.fn(this)}
+    },
+  },
+}))
+app.set('view engine', '.hbs')
+
+// ROUTES
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/views/home.html'))
+  res.render('home')
 })
 
 app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname + '/views/about.html'))
+  res.render('about')
 })
 
 app.get('/employees', (req, res) => {
