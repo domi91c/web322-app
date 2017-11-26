@@ -62,34 +62,34 @@ app.get('/employees', (req, res) => {
   if (req.query.status) {
     data_service.getEmployeesByStatus(req.query.status)
                 .then(resp => {
-                  res.json(resp)
+                  res.render('employeeList', { data: resp, title: 'Employees' })
                 })
                 .catch(err => {
-                  res.json({ message: err })
+                  res.render('employeeList', { data: {}, title: 'Employees' })
                 })
   } else if (req.query.department) {
     data_service.getEmployeesByDepartment(req.query.department)
                 .then(resp => {
-                  res.json(resp)
+                  res.render('employeeList', { data: resp, title: 'Employees' })
                 })
                 .catch(err => {
-                  res.json({ message: err })
+                  res.render('employeeList', { data: {}, title: 'Employees' })
                 })
   } else if (req.query.manager) {
     data_service.getEmployeesByManager(req.query.manager)
                 .then(resp => {
-                  res.json(resp)
+                  res.render('employeeList', { data: resp, title: 'Employees' })
                 })
                 .catch(err => {
-                  res.json({ message: err })
+                  res.render('employeeList', { data: {}, title: 'Employees' })
                 })
   } else {
     data_service.getAllEmployees()
                 .then(resp => {
-                  res.json(resp)
+                  res.render('employeeList', { data: resp, title: 'Employees' })
                 })
                 .catch(err => {
-                  res.json({ message: err })
+                  res.render('employeeList', { data: {}, title: 'Employees' })
                 })
   }
 })
